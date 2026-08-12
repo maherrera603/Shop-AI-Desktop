@@ -1,0 +1,203 @@
+﻿<Page x:Class="ShopAIDesktop.UI.Pages.Categories.CategoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ShopAIDesktop.UI.Pages.Categories"
+      xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CategoryPage">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--HEADER-->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            
+            <StackPanel Grid.Column="0">
+                <TextBlock
+                    Text="Categorias"
+                    FontSize="28"
+                    FontWeight="SemiBold"
+                    Foreground="#3F1B91" />
+
+                <TextBlock
+                    Text="Administra las categorias de tu catalogo"
+                    FontSize="13"
+                    Foreground="#6F6685"
+                    Margin="0,6,0,0" />
+            </StackPanel>
+
+            <Button 
+            Grid.Column="1"
+            Width="170"
+            Height="42"
+            Margin="20,0,0,0"
+            Background="#5522AB"
+            Foreground="White"
+            HorizontalAlignment="Right"
+            BorderThickness="1"
+            Cursor="Hand">
+                <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                    <svgc:SvgViewbox Source="/Assets/Icons/plus.svg"
+                                 Width="18"
+                                 Height="18"
+                                 Margin="0,0,8,0" />
+                    <TextBlock
+                    Text="Nueva Categoría"
+                    FontSize="13"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center" />
+                </StackPanel>
+
+            </Button>
+
+        </Grid>
+
+        <!--FILTROS Y ORGANIZACION-->
+        <Border Grid.Row="1"
+                Margin="0, 20, 0,0"
+                Padding="20"
+                Background="White"
+                BorderBrush="#DDD2F5"
+                BorderThickness="1"
+                CornerRadius="10">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                
+                    <Border
+                            Height="42"
+                            Width="400"
+                            MaxWidth="450"
+                            HorizontalAlignment="Left"
+                            Background="#F8F6FC"
+                            BorderBrush="#E4DDF5"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="42" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <svgc:SvgViewbox Grid.Column="0"
+                                             Source="/Assets/Icons/search.svg"
+                                             Width="18"
+                                             Height="18"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center" />
+                    
+                            <TextBox Grid.Column="1"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     VerticalContentAlignment="Center"
+                                     FontSize="13"
+                                     Foreground="#3F3A48"
+                                     Padding="0,0,10,0" />
+                        </Grid>
+                    </Border>
+            
+                    <!--ESTADO-->
+                    <ComboBox
+                        Grid.Column="1"
+                        Width="250"
+                        Height="42"
+                        Margin="15,0,0,0"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Background="Transparent"
+                        BorderBrush="#E4DDF5"
+                        BorderThickness="1">
+
+                        <ComboBoxItem Content="Todas" IsSelected="True"/>
+                        <ComboBoxItem Content="Activas" />
+                        <ComboBoxItem Content="Inactivas" />
+                    </ComboBox>
+                </StackPanel>
+            
+                <!--CAMBIO DE VISTA-->
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    Margin="20,0,0,0">
+
+                    <Button
+                        Width="85"
+                        Height="42"
+                        Background="#5522AB"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Cursor="Hand">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <svgc:SvgViewbox
+                                Source="/Assets/Icons/list.svg"
+                                Width="18"
+                                Height="18" />
+
+                            <TextBlock 
+                                Text="Tabla"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                VerticalAlignment="Center" 
+                                Margin="7,0,0,0"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Width="85"
+                        Height="42"
+                        Background="#5522AB"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Margin="15,0,0,0"
+                        Cursor="Hand">
+
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <svgc:SvgViewbox
+                                Source="/Assets/Icons/grid.svg"
+                                Width="18"
+                                Height="18" />
+
+                            <TextBlock
+                                Text="Tarjetas"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                VerticalAlignment="Center"
+                                Margin="7,0,0,0"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+                </StackPanel>
+                    
+            </Grid>
+
+        </Border>
+    </Grid>
+    
+    
+</Page>

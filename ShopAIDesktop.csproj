@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Icons\box.svg" />
+    <None Remove="Assets\Icons\checkmark.svg" />
+    <None Remove="Assets\Icons\chevron-right.svg" />
+    <None Remove="Assets\Icons\clock.svg" />
+    <None Remove="Assets\Icons\grid.svg" />
+    <None Remove="Assets\Icons\home.svg" />
+    <None Remove="Assets\Icons\list-circle.svg" />
+    <None Remove="Assets\Icons\list.svg" />
+    <None Remove="Assets\Icons\log-out.svg" />
+    <None Remove="Assets\Icons\minus.svg" />
+    <None Remove="Assets\Icons\plus-circle.svg" />
+    <None Remove="Assets\Icons\plus.svg" />
+    <None Remove="Assets\Icons\pricetags.svg" />
+    <None Remove="Assets\Icons\search.svg" />
+    <None Remove="Assets\Icons\settings.svg" />
+    <None Remove="Assets\Icons\square.svg" />
+    <None Remove="Assets\Icons\user.svg" />
+    <None Remove="Assets\Icons\warning.svg" />
+    <None Remove="Assets\Icons\x.svg" />
+    <None Remove="Assets\Images\Logo.png" />
+    <None Remove="Assets\Images\sign-in.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\box.svg" />
+    <Resource Include="Assets\Icons\chevron-right.svg" />
+    <Resource Include="Assets\Icons\clock.svg" />
+    <Resource Include="Assets\Icons\grid.svg" />
+    <Resource Include="Assets\Icons\list.svg" />
+    <Resource Include="Assets\Icons\plus-circle.svg" />
+    <Resource Include="Assets\Icons\plus.svg" />
+    <Resource Include="Assets\Icons\pricetags.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.10" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\checkmark.svg" />
+    <Resource Include="Assets\Icons\home.svg" />
+    <Resource Include="Assets\Icons\list-circle.svg" />
+    <Resource Include="Assets\Icons\log-out.svg" />
+    <Resource Include="Assets\Icons\minus.svg" />
+    <Resource Include="Assets\Icons\search.svg" />
+    <Resource Include="Assets\Icons\settings.svg" />
+    <Resource Include="Assets\Icons\square.svg" />
+    <Resource Include="Assets\Icons\user.svg" />
+    <Resource Include="Assets\Icons\warning.svg" />
+    <Resource Include="Assets\Icons\x.svg" />
+    <Resource Include="Assets\Images\Logo.png" />
+    <Resource Include="Assets\Images\sign-in.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="docs\images\authentication\" />
+  </ItemGroup>
+
+</Project>

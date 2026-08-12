@@ -1,0 +1,38 @@
+﻿<Window x:Class="ShopAIDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShopAIDesktop"
+        mc:Ignorable="d"
+        xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
+        xmlns:components="clr-namespace:ShopAIDesktop.UI.Components.WindowTitleBar"
+        xmlns:pages="clr-namespace:ShopAIDesktop.UI.Pages.Login"
+        Width="1200"
+        Height="650"
+        Title="ShopAI - Admin" 
+        WindowStyle="None" 
+        ResizeMode="NoResize" 
+        WindowState="Normal" 
+        Padding="0" 
+        Margin="0" 
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        >
+
+    <DockPanel>
+        <!--Barra superior-->
+        <components:WindowTitleBar x:Name="MainTitleBar"
+                                   DockPanel.Dock="Top" 
+                                   Title="ShopAI - Iniciar Sesion" 
+                                   IsMinimize="False" 
+                                   IsMaximize="False"/>
+        
+        <!--pagina actual-->
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+
+
+
+    </DockPanel>
+</Window>

@@ -1,0 +1,98 @@
+﻿# ===================================
+# Visual Studio
+# ===================================
+
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ===================================
+# .NET / Build
+# ===================================
+
+bin/
+obj/
+out/
+
+# ===================================
+# NuGet
+# ===================================
+
+packages/
+*.nupkg
+*.snupkg
+
+# NuGet generated files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ===================================
+# Visual Studio Code
+# ===================================
+
+.vscode/
+
+# ===================================
+# Rider / JetBrains
+# ===================================
+
+.idea/
+*.sln.iml
+
+# ===================================
+# Logs
+# ===================================
+
+*.log
+
+# ===================================
+# Temporary files
+# ===================================
+
+*.tmp
+*.temp
+*.cache
+*.bak
+*.swp
+*~
+
+# ===================================
+# OS
+# ===================================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===================================
+# Publish / Deployment
+# ===================================
+
+publish/
+*.publishsettings
+
+# ===================================
+# Test results / Coverage
+# ===================================
+
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# ===================================
+# Local configuration
+# ===================================
+
+appsettings.Local.json
+appsettings.*.Local.json
+
+# ===================================
+# User-specific launch settings
+# ===================================
+
+Properties/launchSettings.local.json
