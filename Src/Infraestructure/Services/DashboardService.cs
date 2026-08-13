@@ -2,6 +2,7 @@
 using ShopAIDesktop.Src.Domain.Common;
 using ShopAIDesktop.Src.Domain.Dtos.Responses.Dashboard;
 using ShopAIDesktop.Src.Domain.Services;
+using ShopAIDesktop.Src.Exceptions;
 using ShopAIDesktop.Src.Infraestructure.Sessions;
 
 
@@ -24,15 +25,23 @@ public class DashboardService : IDashboardService
 
     public async Task<ApiResponse<SummaryResponse>> SummaryCatalog()
     {
-        
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_shopAIConfiguration.Gateway}/dashboard/summary");
-        httpRequest.Headers.Add("x-platform", "WEB");
-        httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
+        try
+        {
 
-        var response = await _httpClient.SendAsync(httpRequest);
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_shopAIConfiguration.Gateway}/dashboard/summary");
+            httpRequest.Headers.Add("x-platform", "WEB");
+            httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
 
-        var result = await response.Content.ReadFromJsonAsync<ApiResponse<SummaryResponse>>();
+            var response = await _httpClient.SendAsync(httpRequest);
 
-        return result!;
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<SummaryResponse>>();
+
+            return result!;
+        }
+        catch (ServiceException)
+        {
+            throw;
+        }
+
     }
 }

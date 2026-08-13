@@ -3,6 +3,7 @@ using ShopAIDesktop.Src.Domain.Common;
 using ShopAIDesktop.Src.Domain.Dtos.Requests.Auth;
 using ShopAIDesktop.Src.Domain.Dtos.Responses.Auth;
 using ShopAIDesktop.Src.Domain.Services;
+using ShopAIDesktop.Src.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,29 +26,41 @@ public class AuthService : IAuthService
 
     public async Task<ApiResponse<SignInResponse>> SignInAsync(SignInRequest request)
     {
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/sign-in");
-        httpRequest.Headers.Add("x-platform", "WEB");
-        httpRequest.Content = JsonContent.Create(request);
+        try { 
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/sign-in");
+            httpRequest.Headers.Add("x-platform", "WEB");
+            httpRequest.Content = JsonContent.Create(request);
 
-        var response = await _httpClient.SendAsync(httpRequest);
+            var response = await _httpClient.SendAsync(httpRequest);
 
 
-        var result = await response.Content.ReadFromJsonAsync<ApiResponse<SignInResponse>>();
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<SignInResponse>>();
 
-        return result!;
+            return result!;
+        }
+        catch (ServiceException) {
+            throw;
+        }
     }
 
     public async Task<ApiResponse<object>> LogoutAsync(string accessToken, string refreshToken)
     {
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/logout");
-        httpRequest.Headers.Add("x-platform", "WEB");
-        httpRequest.Headers.Add("x-refresh-token", $"Bearer {refreshToken}");
-        httpRequest.Headers.Add("Authorization", $"Bearer {accessToken}");
+        try
+        {
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/logout");
+            httpRequest.Headers.Add("x-platform", "WEB");
+            httpRequest.Headers.Add("x-refresh-token", $"Bearer {refreshToken}");
+            httpRequest.Headers.Add("Authorization", $"Bearer {accessToken}");
 
-        var resposne = await _httpClient.SendAsync(httpRequest);
+            var resposne = await _httpClient.SendAsync(httpRequest);
 
-        var result = await resposne.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            var result = await resposne.Content.ReadFromJsonAsync<ApiResponse<object>>();
 
-        return result!;
+            return result!;
+        } catch (ServiceException)
+        {
+            throw;
+        }
+
     }
 }

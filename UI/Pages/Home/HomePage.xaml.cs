@@ -1,5 +1,7 @@
 ﻿using ShopAIDesktop.Src.Domain.Dtos.Responses.Dashboard;
 using ShopAIDesktop.Src.Domain.Services;
+using ShopAIDesktop.UI.Components.CustomAlert;
+using ShopAIDesktop.UI.Components.CustomCard;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,16 +45,41 @@ public partial class HomePage : Page
         var response = await _dashboardService.SummaryCatalog();
         _summaryResponse = response.Data!;
 
-        CardCategory.Title = "Categorias";
-        CardCategory.Icon = "/Assets/Icons/pricetags.svg";
-        CardCategory.Value = $"{_summaryResponse.CategoriesTotal} Categorias";
-        CardCategory.Description = $"Categorias agregadas {_summaryResponse.CategoriesCreatedThisMonth}";
+        if(response.Code >= 400)
+        {
+            var alert = new CustomAlert(AlertType.Warning, response.Message)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            alert.ShowDialog();
+
+            return;
+        }
+
+        LoadCustomCard(CardCategory, 
+            "Categorias",
+            "pricetags",
+            _summaryResponse.CategoriesTotal,
+            _summaryResponse.CategoriesCreatedThisMonth
+        );
+
+        LoadCustomCard(
+            CardProduct,
+            "Productos",
+            "box",
+            _summaryResponse.ProductsTotal,
+            _summaryResponse.ProductsCreatedThisMonth
+        );
+    }
 
 
-        CardProduct.Title = "Productos";
-        CardProduct.Icon = "/Assets/Icons/box.svg";
-        CardProduct.Value = $"{_summaryResponse.ProductsTotal} Productos";
-        CardProduct.Description = $"Producros agregados {_summaryResponse.ProductsCreatedThisMonth}";
+    private void LoadCustomCard(CustomCard customcard, string title, string icon, int quantity, int createdThisMonth)
+    {
+        customcard.Title = title;
+        customcard.Icon = $"/Assets/Icons/{icon}.svg";
+        customcard.Value = $"{quantity} {title}";
+        customcard.Description = $"Producros agregados {createdThisMonth}";
+
     }
 
     private void CardsScrollViewer_MouseLeftButtonDown(object sender, MouseEventArgs e)
