@@ -1,7 +1,9 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShopAIDesktop.Src.Config;
 using ShopAIDesktop.Src.Domain.Services;
 using ShopAIDesktop.Src.Infraestructure.Services;
 using ShopAIDesktop.UI.Components.Sidebar;
@@ -21,9 +23,22 @@ public partial class App : Application
 
     public App()
     {
+
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile(
+                "appsettings.json",
+                optional: false,
+                reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+
         var services = new ServiceCollection();
 
         services.AddHttpClient();
+        services.AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton<ShopAIConfiguration>();
 
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IDashboardService, DashboardService>();

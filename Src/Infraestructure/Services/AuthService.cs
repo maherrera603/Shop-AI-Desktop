@@ -1,4 +1,5 @@
-﻿using ShopAIDesktop.Src.Domain.Common;
+﻿using ShopAIDesktop.Src.Config;
+using ShopAIDesktop.Src.Domain.Common;
 using ShopAIDesktop.Src.Domain.Dtos.Requests.Auth;
 using ShopAIDesktop.Src.Domain.Dtos.Responses.Auth;
 using ShopAIDesktop.Src.Domain.Services;
@@ -14,15 +15,17 @@ namespace ShopAIDesktop.Src.Infraestructure.Services;
 public class AuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
+    private readonly ShopAIConfiguration _shopAIConfiguration;
 
-    public AuthService(HttpClient httpClient)
+    public AuthService(HttpClient httpClient, ShopAIConfiguration shopAIConfiguration)
     {
         _httpClient = httpClient;
+        _shopAIConfiguration = shopAIConfiguration;
     }
 
     public async Task<ApiResponse<SignInResponse>> SignInAsync(SignInRequest request)
     {
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:3000/api/v1/auth/sign-in");
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/sign-in");
         httpRequest.Headers.Add("x-platform", "WEB");
         httpRequest.Content = JsonContent.Create(request);
 
@@ -36,7 +39,7 @@ public class AuthService : IAuthService
 
     public async Task<ApiResponse<object>> LogoutAsync(string accessToken, string refreshToken)
     {
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "http://localhost:3000/api/v1/auth/logout");
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/auth/logout");
         httpRequest.Headers.Add("x-platform", "WEB");
         httpRequest.Headers.Add("x-refresh-token", $"Bearer {refreshToken}");
         httpRequest.Headers.Add("Authorization", $"Bearer {accessToken}");

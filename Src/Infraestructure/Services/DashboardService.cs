@@ -1,4 +1,5 @@
-﻿using ShopAIDesktop.Src.Domain.Common;
+﻿using ShopAIDesktop.Src.Config;
+using ShopAIDesktop.Src.Domain.Common;
 using ShopAIDesktop.Src.Domain.Dtos.Responses.Dashboard;
 using ShopAIDesktop.Src.Domain.Services;
 using ShopAIDesktop.Src.Infraestructure.Sessions;
@@ -13,16 +14,18 @@ namespace ShopAIDesktop.Src.Infraestructure.Services;
 public class DashboardService : IDashboardService
 {
     private readonly HttpClient _httpClient;
+    private readonly ShopAIConfiguration _shopAIConfiguration;
 
-    public DashboardService(HttpClient httpClient)
+    public DashboardService(HttpClient httpClient, ShopAIConfiguration shopAIConfiguration)
     {
         _httpClient = httpClient;
+        _shopAIConfiguration = shopAIConfiguration;
     }
 
     public async Task<ApiResponse<SummaryResponse>> SummaryCatalog()
     {
         
-        using var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:3000/api/v1/dashboard/summary");
+        using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_shopAIConfiguration.Gateway}/dashboard/summary");
         httpRequest.Headers.Add("x-platform", "WEB");
         httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
 
