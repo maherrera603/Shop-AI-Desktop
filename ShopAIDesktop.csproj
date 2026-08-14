@@ -20,6 +20,8 @@
     <None Remove="Assets\Icons\checkmark.svg" />
     <None Remove="Assets\Icons\chevron-right.svg" />
     <None Remove="Assets\Icons\clock.svg" />
+    <None Remove="Assets\Icons\delete.svg" />
+    <None Remove="Assets\Icons\edit.svg" />
     <None Remove="Assets\Icons\grid.svg" />
     <None Remove="Assets\Icons\home.svg" />
     <None Remove="Assets\Icons\list-circle.svg" />
@@ -47,6 +49,8 @@
     <Resource Include="Assets\Icons\box.svg" />
     <Resource Include="Assets\Icons\chevron-right.svg" />
     <Resource Include="Assets\Icons\clock.svg" />
+    <Resource Include="Assets\Icons\delete.svg" />
+    <Resource Include="Assets\Icons\edit.svg" />
     <Resource Include="Assets\Icons\grid.svg" />
     <Resource Include="Assets\Icons\list.svg" />
     <Resource Include="Assets\Icons\plus-circle.svg" />
