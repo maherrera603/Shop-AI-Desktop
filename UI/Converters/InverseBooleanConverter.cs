@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+using System.Windows.Data;
+
+namespace ShopAIDesktop.UI.Converters;
+
+public class InverseBooleanConverter: IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is bool booleanValue && !booleanValue;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is bool booleanValue && !booleanValue;
+    }
+}

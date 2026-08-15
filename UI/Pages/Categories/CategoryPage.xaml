@@ -42,15 +42,16 @@
             </StackPanel>
 
             <Button 
-            Grid.Column="1"
-            Width="170"
-            Height="42"
-            Margin="20,0,0,0"
-            Background="#5522AB"
-            Foreground="White"
-            HorizontalAlignment="Right"
-            BorderThickness="1"
-            Cursor="Hand">
+                Grid.Column="1"
+                Width="170"
+                Height="42"
+                Margin="20,0,0,0"
+                Background="#5522AB"
+                Foreground="White"
+                HorizontalAlignment="Right"
+                BorderThickness="1"
+                Cursor="Hand"
+                Click="HandleNewCategoryButton_Click">
                 <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center">
 

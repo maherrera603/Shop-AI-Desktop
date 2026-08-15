@@ -1,4 +1,5 @@
-﻿using ShopAIDesktop.Src.Domain.entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ShopAIDesktop.Src.Domain.entities;
 using ShopAIDesktop.Src.Domain.Services;
 using ShopAIDesktop.UI.Components.CustomAlert;
 using System;
@@ -63,5 +64,14 @@ public partial class CategoryPage : Page
 
         Debug.WriteLine($"categorias {Categories.ToList().Count}");
 
+    }
+
+    private void HandleNewCategoryButton_Click(object sender, RoutedEventArgs e)
+    {
+        var categoryFormPage = ((App)Application.Current)
+            .Services
+            .GetRequiredService<CategoryFormPage>();
+
+        NavigationService.Navigate(categoryFormPage);
     }
 }

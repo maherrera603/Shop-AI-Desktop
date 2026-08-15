@@ -1,0 +1,396 @@
+﻿<Page x:Class="ShopAIDesktop.UI.Pages.Categories.CategoryFormPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ShopAIDesktop.UI.Pages.Categories"
+      xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
+      xmlns:converter="clr-namespace:ShopAIDesktop.UI.Converters"
+      mc:Ignorable="d"
+      Title="CategoryFormPage" d:DesignHeight="450" d:DesignWidth="800">
+
+    <Page.Resources>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- ================================================= -->
+        <!-- HEADER                                            -->
+        <!-- ================================================= -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--Title-->
+            <StackPanel Grid.Column="0">
+                <TextBlock
+                    Text="Nueva categoría"
+                    FontSize="28"
+                    FontWeight="SemiBold"
+                    Foreground="#3F1B91"/>
+
+                <TextBlock
+                    Text="Crea una nueva categoria para tu catálogo"
+                    FontSize="13"
+                    Foreground="#6F6685"
+                    Margin="0,6,0,0" />
+            </StackPanel>
+
+
+            <!--Back-->
+            <Button
+                Grid.Column="1"
+                Width="120"
+                Height="38"
+                Background="Transparent"
+                BorderThickness="0"
+                Foreground="#5522AB"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Cursor="Hand" 
+                Click="HandleBackCategory_Click">
+                <StackPanel Orientation="Horizontal">
+                    <svgc:SvgViewbox 
+                        Source="/Assets/Icons/arrow-left.svg"
+                        Height="13"
+                        Width="13"
+                        Margin="0,0,6,0" />
+
+                    <TextBlock
+                        Text="Categorias"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+
+        </Grid>
+
+        <!-- ================================================= -->
+        <!-- FORM                                              -->
+        <!-- ================================================= -->
+        <Border
+            Grid.Row="1"
+            Margin="0,20,0,0"
+            BorderBrush="#DDD5F5"
+            BorderThickness="1"
+            CornerRadius="10"
+            Background="White"
+            Padding="20">
+
+            <ScrollViewer
+                VerticalScrollBarVisibility="Hidden"
+                HorizontalScrollBarVisibility="Disabled">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- ================================================= -->
+                    <!-- Information                                       -->
+                    <!-- ================================================= -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Text="Información del categoría"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="#3F1B91"
+                        Margin="0,0,0,20" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--Name-->
+                        <StackPanel Grid.Row="0">
+                            <TextBlock
+                                Text="Nombre"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Foreground="#3F1B91"
+                                Margin="0,0,0,7" />
+                            <TextBox
+                                Text="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged}"
+                                Height="40"
+                                FontSize="13"
+                                Padding="12,0"
+                                VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+
+                        <!--Slug-->
+                        <StackPanel Grid.Row="1">
+                            <TextBlock
+                                Text="Slug"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Foreground="#3F1B91"
+                                Margin="0,0,0,7" />
+                            <TextBox
+                                Text="{Binding Category.Slug, UpdateSourceTrigger=PropertyChanged}"
+                                Height="40"
+                                FontSize="13"
+                                Padding="12,0"
+                                VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <!--Description-->
+                        <StackPanel Grid.Row="2">
+                            <TextBlock
+                                Text="Descripción"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Foreground="#3F1B91"
+                                Margin="0,0,0,7" />
+                            <TextBox
+                                Text="{Binding Category.Description, UpdateSourceTrigger=PropertyChanged}"
+                                Height="90"
+                                FontSize="13"
+                                Padding="12,10"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- Image + STatus                                    -->
+                    <!-- ================================================= -->
+                    <Grid
+                        Grid.Row="2"
+                        Margin="0, 20,0,20" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            Grid.Column="0"
+                            BorderBrush="#DDD5F5"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="350" />
+                                    <RowDefinition Height="52" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Text="Imagen"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="#3F1B91"
+                                    Margin="0,0,0,15" />
+
+                                <Border
+                                    Grid.Row="1"
+                                    BorderBrush="#CFC2F5"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Background="#FAF8FF">
+                                    <Grid>
+                                        <!-- Imagen seleccionada -->
+                                        <Image
+                                            x:Name="ImagePreview"
+                                            Stretch="Uniform"
+                                            Margin="10"
+                                            Visibility="Collapsed" />
+
+                                        <!-- Placeholder-->
+                                        <StackPanel
+                                        x:Name="ImagePlaceholder"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+
+                                        <TextBlock
+                                            Text="▧"
+                                            FontSize="38"
+                                            Foreground="#B5A9D8"
+                                            HorizontalAlignment="Center" />
+
+                                        <TextBlock
+                                            Text="Vista previa de la imagen"
+                                            FontSize="13"
+                                            Foreground="#6F6685"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,8,0,0" />
+
+                                        <TextBlock
+                                            Text="La imagen se mostrara Aquí"
+                                            FontSize="11"
+                                            Foreground="#9A91AA"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,4,0,0" />
+                                    </StackPanel>
+                                    </Grid>
+                                </Border>
+
+
+                                <Button
+                                    Grid.Row="2"
+                                    Height="40"
+                                    Margin="0,12,0,0"
+                                    Background="Transparent"
+                                    BorderBrush="#5522AB"
+                                    BorderThickness="1"
+                                    Foreground="#5522AB"
+                                    Cursor="Hand"
+                                    Click="HandleSelectedImage_Click">
+                                    <TextBlock Text="Seleccionar Imagen"
+                                               FontSize="13"
+                                               FontWeight="SemiBold" />
+                                </Button>
+
+
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                BorderBrush="#DDD5F5"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="15">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!--TITLE-->
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Text="Estado"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="#3F1B91"
+                                    Margin="0,0,0,15"/>
+
+                                <!--Options-->
+                                <StackPanel
+                                    Grid.Row="1"
+                                    VerticalAlignment="Top">
+
+                                    <!--Active-->
+                                    <Border
+                                        BorderBrush="#DDD5F5"
+                                        BorderThickness="1"
+                                        CornerRadius="7"
+                                        Padding="15"
+                                        Margin="0,0,0,12">
+
+                                        <RadioButton
+                                            GroupName="CategoryStatus"
+                                            IsChecked="{Binding Category.IsActive}"
+                                            Cursor="Hand">
+
+                                            <StackPanel>
+
+                                                <TextBlock
+                                                    Text="Activa"
+                                                    FontSize="13"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#5522AB" />
+
+                                                <TextBlock
+                                                    Text="La categoría estará disponible en el catálogo."
+                                                    FontSize="11"
+                                                    Foreground="#6F6685"
+                                                    Margin="0,5,0,0" />
+
+                                            </StackPanel>
+
+                                        </RadioButton>
+                                    </Border>
+
+                                    <!--Inactive-->
+                                    <Border
+                                        BorderBrush="#F0D3D3"
+                                        BorderThickness="1"
+                                        CornerRadius="7"
+                                        Padding="15" >
+
+                                        <RadioButton
+                                            GroupName="CategoryStatus"
+                                            IsChecked="{Binding Category.IsActive, Converter={StaticResource InverseBooleanConverter}}"
+                                            Cursor="Hand">
+
+                                            <StackPanel>
+
+                                                <TextBlock
+                                                    Text="Inactiva"
+                                                    FontSize="13"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#D32F2F" />
+
+                                                <TextBlock
+                                                    Text="La categoría no estará disponible en el catálogo."
+                                                    FontSize="11"
+                                                    Foreground="#6F6685"
+                                                    Margin="0,5,0,0" />
+
+                                            </StackPanel>
+
+                                        </RadioButton>
+                                    </Border>
+
+                                </StackPanel>
+                            </Grid>
+
+                        </Border>
+                    </Grid>
+
+                    <StackPanel
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                        <Button
+                            Width="110"
+                            Height="40"
+                            Margin="0,0,10,0"
+                            Content="Cancelar"
+                            Background="Transparent"
+                            BorderBrush="#DDD5F5"
+                            BorderThickness="1"
+                            Foreground="#6F6685"
+                            Cursor="Hand" />
+
+                        <Button
+                            Width="150"
+                            Height="40"
+                            Margin="0,0,10,0"
+                            Content="Crear Categoria"
+                            Background="#5522AB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            Cursor="Hand" />
+                    </StackPanel>
+
+                </Grid>
+
+            </ScrollViewer>
+        </Border>
+
+    </Grid>
+</Page>

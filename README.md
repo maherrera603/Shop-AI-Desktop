@@ -59,6 +59,14 @@ La sección de categorías permite consultar y administrar la información del c
 
 ---
 
+## Formulario de creación de categoría
+
+![Formulario de creación de categoría](docs/images/categories/category-form.png)
+
+El formulario permite registrar una nueva categoría del catálogo mediante una interfaz que incluye información básica, descripción, estado y selección de imagen.
+
+---
+
 ## Componentes de interfaz
 
 ShopAIDesktop utiliza componentes reutilizables para mantener una interfaz consistente entre los diferentes módulos.

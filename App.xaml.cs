@@ -43,6 +43,7 @@ public partial class App : Application
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IDashboardService, DashboardService>();
         services.AddTransient<ICategoryService, CategoryService>();
+        services.AddTransient<ICloudinayService, CloudinaryService>();
 
 
         services.AddTransient<LoginPage>();
@@ -50,6 +51,7 @@ public partial class App : Application
         services.AddTransient<Dashboard>();
         services.AddTransient<HomePage>();
         services.AddTransient<CategoryPage>();
+        services.AddTransient<CategoryFormPage>();
 
         Services = services.BuildServiceProvider();
 

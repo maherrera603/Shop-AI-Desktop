@@ -16,6 +16,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\arrow-left.svg" />
     <None Remove="Assets\Icons\box.svg" />
     <None Remove="Assets\Icons\checkmark.svg" />
     <None Remove="Assets\Icons\chevron-right.svg" />
@@ -46,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icons\arrow-left.svg" />
     <Resource Include="Assets\Icons\box.svg" />
     <Resource Include="Assets\Icons\chevron-right.svg" />
     <Resource Include="Assets\Icons\clock.svg" />
