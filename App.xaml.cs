@@ -27,7 +27,7 @@ public partial class App : Application
         var configuration = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile(
-                "appsettings.json",
+                "appsettings.Development.json",
                 optional: false,
                 reloadOnChange: true)
             .AddEnvironmentVariables()
@@ -43,7 +43,7 @@ public partial class App : Application
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IDashboardService, DashboardService>();
         services.AddTransient<ICategoryService, CategoryService>();
-        services.AddTransient<ICloudinayService, CloudinaryService>();
+        services.AddTransient<IImageService, ImageService>();
 
 
         services.AddTransient<LoginPage>();

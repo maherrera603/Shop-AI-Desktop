@@ -16,6 +16,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.Development.json" />
     <None Remove="Assets\Icons\arrow-left.svg" />
     <None Remove="Assets\Icons\box.svg" />
     <None Remove="Assets\Icons\checkmark.svg" />
@@ -44,6 +45,12 @@
 
   <ItemGroup>
     <Compile Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

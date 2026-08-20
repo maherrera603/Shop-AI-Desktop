@@ -384,7 +384,8 @@
                             Foreground="White"
                             BorderThickness="0"
                             FontWeight="SemiBold"
-                            Cursor="Hand" />
+                            Cursor="Hand" 
+                            Click="HandleSaveCategorie_Click"/>
                     </StackPanel>
 
                 </Grid>

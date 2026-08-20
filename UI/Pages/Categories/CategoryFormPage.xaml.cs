@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ShopAIDesktop.Src.Domain.entities;
 using ShopAIDesktop.Src.Domain.Services;
 using System.Diagnostics;
+using ShopAIDesktop.UI.Components.CustomAlert;
 namespace ShopAIDesktop.UI.Pages.Categories;
 
 
@@ -25,15 +26,18 @@ namespace ShopAIDesktop.UI.Pages.Categories;
 public partial class CategoryFormPage : Page
 {
     private readonly ICategoryService _categoryService;
-    public Category category { get; set; }
+    private readonly IImageService _imageService;
+    public Category Category { get; set; }
     private string? _selectedImagePath;
 
-    public CategoryFormPage(ICategoryService categoryService)
+    public CategoryFormPage(ICategoryService categoryService, IImageService imageService)
     {
         InitializeComponent();
         _categoryService = categoryService;
-        category = new Category { IsActive = true, ImageUrl = null };
+        _imageService = imageService;
+
         DataContext = this;
+        Category = new Category { IsActive = true, ImageUrl = null };
     }
 
     private void HandleBackCategory_Click(object sender, RoutedEventArgs e)
@@ -72,5 +76,36 @@ public partial class CategoryFormPage : Page
         ImagePreview.Source = bitmap;
         ImagePreview.Visibility = Visibility.Visible;
         ImagePlaceholder.Visibility = Visibility.Collapsed;
+    }
+
+    private async void HandleSaveCategorie_Click(object sender, RoutedEventArgs e) {
+        var responseImage = await _imageService.UploadImageAsync(_selectedImagePath!);
+        if(responseImage.Code >= 400)
+        {
+            ShowAlert(AlertType.Warning, responseImage.Message);
+            return;
+        }
+
+        Category.ImageUrl = responseImage.Data!.SecureUrl;
+        var responseCategory = await _categoryService.Create(Category);
+        if (responseCategory.Code >= 400) {
+            await _imageService.DeleteImageAsync(responseImage.Data.PublicId);
+            ShowAlert(AlertType.Warning, responseCategory.Message);
+            return;
+        }
+
+
+        ShowAlert(AlertType.Success, responseCategory.Message);
+        Category = new Category();
+    }
+
+    private void ShowAlert(AlertType alertType,  string message)
+    {
+        var alert = new CustomAlert(alertType, message)
+        {
+            Owner = Window.GetWindow(this)
+        };
+
+        alert.ShowDialog();
     }
 }

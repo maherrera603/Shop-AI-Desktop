@@ -42,4 +42,25 @@ public class CategoryService : ICategoryService
             throw;
         }
     }
+
+
+    public async Task<ApiResponse<Category>> Create(Category category)
+    {
+        try
+        {
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Post, $"{_shopAIConfiguration.Gateway}/categories");
+            httpRequest.Headers.Add("x-platform", "WEB");
+            httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
+
+            httpRequest.Content = JsonContent.Create(category);
+
+            var response = await _httpClient.SendAsync(httpRequest);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<Category>>();
+            return result!;
+        }
+        catch (ServiceException)
+        {
+            throw;
+        }
+    }
 }

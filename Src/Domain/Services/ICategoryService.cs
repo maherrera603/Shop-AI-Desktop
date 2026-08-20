@@ -9,4 +9,6 @@ namespace ShopAIDesktop.Src.Domain.Services;
 public interface ICategoryService
 {
     Task<ApiResponse<List<Category>>> Find();
+
+    Task<ApiResponse<Category>> Create(Category category);
 }

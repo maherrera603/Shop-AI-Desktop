@@ -78,7 +78,7 @@ public partial class HomePage : Page
         customcard.Title = title;
         customcard.Icon = $"/Assets/Icons/{icon}.svg";
         customcard.Value = $"{quantity} {title}";
-        customcard.Description = $"Producros agregados {createdThisMonth}";
+        customcard.Description = $"{title} agregados: {createdThisMonth}";
 
     }
 

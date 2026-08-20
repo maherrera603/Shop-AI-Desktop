@@ -61,9 +61,6 @@ public partial class CategoryPage : Page
         {
             Categories.Add(category);    
         }
-
-        Debug.WriteLine($"categorias {Categories.ToList().Count}");
-
     }
 
     private void HandleNewCategoryButton_Click(object sender, RoutedEventArgs e)
