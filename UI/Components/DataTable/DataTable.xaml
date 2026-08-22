@@ -176,7 +176,8 @@
                                             Margin="0,0,6,0"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Cursor="Hand">
+                                            Cursor="Hand"
+                                            Click="HandleEditCategory_Click">
                                             <svgc:SvgViewbox
                                                 Source="/Assets/Icons/edit.svg"
                                                 Width="17"

@@ -31,13 +31,13 @@
             <!--Title-->
             <StackPanel Grid.Column="0">
                 <TextBlock
-                    Text="Nueva categoría"
+                    Text="{Binding TitleText}"
                     FontSize="28"
                     FontWeight="SemiBold"
                     Foreground="#3F1B91"/>
 
                 <TextBlock
-                    Text="Crea una nueva categoria para tu catálogo"
+                    Text="{Binding Subtitle}"
                     FontSize="13"
                     Foreground="#6F6685"
                     Margin="0,6,0,0" />
@@ -300,7 +300,8 @@
 
                                         <RadioButton
                                             GroupName="CategoryStatus"
-                                            IsChecked="{Binding Category.IsActive}"
+                                            IsChecked="{Binding Category.IsActive, Mode=OneWay}"
+                                            Click="HandleActiveClick"
                                             Cursor="Hand">
 
                                             <StackPanel>
@@ -331,7 +332,8 @@
 
                                         <RadioButton
                                             GroupName="CategoryStatus"
-                                            IsChecked="{Binding Category.IsActive, Converter={StaticResource InverseBooleanConverter}}"
+                                            IsChecked="{Binding Category.IsActive, Mode=OneWay, Converter={StaticResource InverseBooleanConverter}}"
+                                            Click="HandleInactiveClick"
                                             Cursor="Hand">
 
                                             <StackPanel>
@@ -373,7 +375,9 @@
                             BorderBrush="#DDD5F5"
                             BorderThickness="1"
                             Foreground="#6F6685"
-                            Cursor="Hand" />
+                            Visibility="{Binding CancelVisibility}"
+                            Cursor="Hand" 
+                            Click="HandleCancel_Click"/>
 
                         <Button
                             Width="150"
@@ -385,7 +389,21 @@
                             BorderThickness="0"
                             FontWeight="SemiBold"
                             Cursor="Hand" 
+                            Visibility="{Binding CreateCategoryVisibility}"
                             Click="HandleSaveCategorie_Click"/>
+
+                        <Button
+                            Width="150"
+                            Height="40"
+                            Margin="0,0,10,0"
+                            Content="Editar Categoria"
+                            Background="#5522AB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            Cursor="Hand" 
+                            Visibility="{Binding UpdateCategoryVisibility}"
+                            Click="HandleUpdateCategory_Click"/>
                     </StackPanel>
 
                 </Grid>

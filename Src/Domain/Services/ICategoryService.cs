@@ -11,4 +11,6 @@ public interface ICategoryService
     Task<ApiResponse<List<Category>>> Find();
 
     Task<ApiResponse<Category>> Create(Category category);
+
+    Task<ApiResponse<Category>> Update(Category category);
 }

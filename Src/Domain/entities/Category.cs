@@ -15,6 +15,7 @@ public class Category
     public string Description { get; set; } = string.Empty;
 
     public string ImageUrl { get; set; } = string.Empty;
+    public string ImageProviderId { get; set; } = string.Empty;
 
     public bool IsActive { get; set; }
 }
