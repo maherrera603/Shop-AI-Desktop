@@ -1,12 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ShopAIDesktop.Src.Domain.entities;
 using ShopAIDesktop.Src.Domain.Services;
+using ShopAIDesktop.UI.Components.ConfirmationAlert;
 using ShopAIDesktop.UI.Components.CustomAlert;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,13 +29,17 @@ namespace ShopAIDesktop.UI.Pages.Categories;
 public partial class CategoryPage : Page
 {
     private readonly ICategoryService _categoryService;
+    private readonly IImageService _imageService;
     public ObservableCollection<Category> Categories { get; set; } = new();
-    public CategoryPage(ICategoryService categoryService)
+    public CategoryPage(ICategoryService categoryService, IImageService imageService)
     {
         InitializeComponent();
         _categoryService = categoryService;
+        _imageService = imageService;
         DataContext = this;
         Loaded += CategoryPage_Loaded;
+        CategoriesTable.DeleteRequest += HandleDeleteCategoryRequested;
+        CategoriesTable.OpenFormUpdate += HandleFormUpdateRequested;
     }
 
 
@@ -47,11 +55,7 @@ public partial class CategoryPage : Page
 
         if( response.Code >= 400)
         {
-            var alert = new CustomAlert(AlertType.Warning, response.Message)
-            {
-                Owner = Window.GetWindow(this)
-            };
-            alert.ShowDialog();
+            ShowAlert(AlertType.Warning, response.Message);
             return;
         }
 
@@ -70,5 +74,65 @@ public partial class CategoryPage : Page
             .GetRequiredService<CategoryFormPage>();
 
         NavigationService.Navigate(categoryFormPage);
+    }
+
+    private async void HandleDeleteCategoryRequested(object sender, Category category)
+    {
+        // confirmacion de la accion del usuairo
+        var confirmationAlert = new ConfirmationAlert
+        {
+            Owner = Application.Current.MainWindow,
+            TitleText = "Eliminar Categoria",
+            MessageText = $"Estás seguro de que deseas eliminar '{category.Name}'",
+            ConfirmText = "Eliminar",
+            CancelText = "Cancelar"
+        };
+
+
+        if (confirmationAlert.ShowDialog() != true) return;
+
+        // eliminar la categoria de la bd 
+        var categoryResponse = await _categoryService.Delete(category);
+        if(categoryResponse.Code >= 400)
+        {
+            ShowAlert(AlertType.Warning, categoryResponse.Message);
+            return;
+        }
+
+        // eliminar la imagen del provedor
+        await _imageService.DeleteImageAsync(category.ImageProviderId);
+        ShowAlert(AlertType.Success, categoryResponse.Message);
+        Categories.Remove(category);
+    }
+
+    private void ShowAlert(AlertType alertType, string message)
+    {
+        var alert = new CustomAlert(alertType, message)
+        {
+            Owner = Window.GetWindow(this)
+        };
+        alert.ShowDialog();
+    }
+
+    // !TODO: Traerme el redireccionamiento ha CategoryFormPage y quitarlo de la tabla
+    public async void HandleFormUpdateRequested(object sender, Category category)
+    {
+        var categoryFormPage = ((App)Application.Current)
+            .Services
+            .GetRequiredService<CategoryFormPage>();
+
+        categoryFormPage.TitleText = "Editar Categoría";
+        categoryFormPage.Subtitle = "Actualiza la información de la categoría";
+        categoryFormPage.CreateCategoryVisibility = Visibility.Collapsed;
+        categoryFormPage.UpdateCategoryVisibility = Visibility.Visible;
+        categoryFormPage.CancelVisibility = Visibility.Visible;
+
+        categoryFormPage.Category = category;
+
+        if (!string.IsNullOrWhiteSpace(category.ImageUrl)) categoryFormPage.ShowImagePreview(category.ImageUrl);
+
+        NavigationService
+            .GetNavigationService(this)
+            .Navigate(categoryFormPage);
     }
 }

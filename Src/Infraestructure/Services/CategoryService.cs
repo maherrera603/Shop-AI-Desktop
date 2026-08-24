@@ -81,6 +81,25 @@ public class CategoryService : ICategoryService
         {
             throw;
         }
+    }
 
+    public async Task<ApiResponse<Category>> Delete(Category category)
+    {
+        try
+        {
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Delete, $"{_shopAIConfiguration.Gateway}/categories/{category.Id}");
+            httpRequest.Headers.Add("x-platform", "WEB");
+            httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
+
+            var response = await _httpClient.SendAsync(httpRequest);
+
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<Category>>();
+
+            return result!;
+        }
+        catch (ServiceException)
+        {
+            throw;
+        }
     }
 }

@@ -177,7 +177,7 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Cursor="Hand"
-                                            Click="HandleEditCategory_Click">
+                                            Click="HandleFormUpdate_Click">
                                             <svgc:SvgViewbox
                                                 Source="/Assets/Icons/edit.svg"
                                                 Width="17"
@@ -190,7 +190,8 @@
                                             Margin="0,0,6,0"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Cursor="Hand">
+                                            Cursor="Hand"
+                                            Click="HandleDelete_Click">
                                             <svgc:SvgViewbox
                                                 Source="/Assets/Icons/delete.svg"
                                                 Width="17"

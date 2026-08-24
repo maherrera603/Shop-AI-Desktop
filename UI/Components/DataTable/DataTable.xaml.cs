@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using ShopAIDesktop.UI.Pages.Categories;
+using SharpVectors.Dom.Events;
 
 namespace ShopAIDesktop.UI.Components.DataTable;
 
@@ -44,31 +45,21 @@ public partial class DataTable : UserControl
         set => SetValue(ItemsSourceProperty, value);
     }
 
+    public event EventHandler<Category>? DeleteRequest;
+    public event EventHandler<Category>? OpenFormUpdate;
 
-    public void HandleEditCategory_Click(object sender, RoutedEventArgs e)
+
+    public void HandleDelete_Click(object sender, RoutedEventArgs e) {
+        if (sender is Button button && button.DataContext is Category category) {
+            DeleteRequest?.Invoke(this, category);
+        }
+    }
+
+    public void HandleFormUpdate_Click(object sender, RoutedEventArgs e)
     {
         if(sender is Button button && button.DataContext is Category category)
         {
-            Debug.WriteLine($"category: {JsonSerializer.Serialize(category)}");
-            
-            var categoryFormPage = ((App)Application.Current)
-                .Services
-                .GetRequiredService<CategoryFormPage>();
-
-            categoryFormPage.TitleText = "Editar Categoría";
-            categoryFormPage.Subtitle = "Actualiza la información de la categoría";
-            categoryFormPage.CreateCategoryVisibility = Visibility.Collapsed;
-            categoryFormPage.UpdateCategoryVisibility = Visibility.Visible;
-            categoryFormPage.CancelVisibility = Visibility.Visible;
-
-            categoryFormPage.Category = category;
-
-
-            if (!string.IsNullOrWhiteSpace(category.ImageUrl)) categoryFormPage.ShowImagePreview(category.ImageUrl);
-
-            NavigationService
-                .GetNavigationService(this)
-                .Navigate(categoryFormPage);
+            OpenFormUpdate?.Invoke(this, category);
         }
     }
 }

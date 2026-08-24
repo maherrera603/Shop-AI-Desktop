@@ -13,4 +13,6 @@ public interface ICategoryService
     Task<ApiResponse<Category>> Create(Category category);
 
     Task<ApiResponse<Category>> Update(Category category);
+
+    Task<ApiResponse<Category>> Delete(Category category);
 }
