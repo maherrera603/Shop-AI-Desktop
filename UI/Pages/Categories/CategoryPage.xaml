@@ -216,8 +216,10 @@
             </Border>
             
             <!--Fila 3.2: Paginacion-->
-            <pagination:Pagination Grid.Row="1"
-                  Margin="0,15,0,0" />
+            <pagination:Pagination 
+                x:Name="PaginationControl"
+                Grid.Row="1"
+                Margin="0,15,0,0" />
 
 
 

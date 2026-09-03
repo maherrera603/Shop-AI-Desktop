@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ShopAIDesktop.UI.Components.Pagination"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Height="40">
+    <Grid x:Name="LayoutRoot" Height="40">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -15,7 +15,7 @@
         <!--Informacion-->
         <TextBlock
             Grid.Column="0"
-            Text="Mostrando 1-10 de 45"
+            Text="{Binding InfoText}"
             FontSize="12"
             Foreground="#6F6685"
             VerticalAlignment="Center" />
@@ -35,7 +35,8 @@
                 BorderThickness="0"
                 Foreground="#6F6685"
                 Cursor="Hand"
-                ToolTip="Pagina Anterior">
+                ToolTip="Pagina Anterior"
+                Click="OnPreviousPageClick">
                 
                 <TextBlock
                     Text="&lt;"
@@ -45,110 +46,48 @@
                     VerticalAlignment="Center" />
             </Button>
 
-            <!-- PÁGINA 1 -->
-            <Button
-                Width="32"
-                Height="32"
-                Margin="0,0,4,0"
-                Background="#5522AB"
-                Foreground="White"
-                BorderThickness="0"
-                Cursor="Hand">
+           <!-- BOTONES DE PAGINAS DINAMICOS -->
+            <ItemsControl ItemsSource="{Binding PageNumbers}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Width="32"
+                            Height="32"
+                            Margin="0,0,4,0"
+                            Background="Transparent"
+                            Foreground="#6F6685"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="OnPageNumberClick">
 
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="6">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border
+                                        Background="{TemplateBinding Background}"
+                                        CornerRadius="6">
+                                        <ContentPresenter
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
 
-                            <ContentPresenter
+                            <TextBlock
+                                Text="{Binding}"
+                                FontSize="12"
+                                FontWeight="SemiBold"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
+                                VerticalAlignment="Center"/>
 
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-
-                <TextBlock
-                    Text="1"
-                    FontSize="12"
-                    FontWeight="SemiBold"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            </Button>
-
-            <!-- PÁGINA 2 -->
-            <Button
-                Width="32"
-                Height="32"
-                Margin="0,0,4,0"
-                Background="Transparent"
-                Foreground="#6F6685"
-                BorderThickness="0"
-                Cursor="Hand">
-
-                <TextBlock
-                    Text="2"
-                    FontSize="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            </Button>
-
-            <!-- PÁGINA 3 -->
-            <Button
-                Width="32"
-                Height="32"
-                Margin="0,0,4,0"
-                Background="Transparent"
-                Foreground="#6F6685"
-                BorderThickness="0"
-                Cursor="Hand">
-
-                <TextBlock
-                    Text="3"
-                    FontSize="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            </Button>
-
-            <!-- PÁGINA 4 -->
-            <Button
-                Width="32"
-                Height="32"
-                Margin="0,0,4,0"
-                Background="Transparent"
-                Foreground="#6F6685"
-                BorderThickness="0"
-                Cursor="Hand">
-
-                <TextBlock
-                    Text="4"
-                    FontSize="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            </Button>
-
-            <!-- PÁGINA 5 -->
-            <Button
-                Width="32"
-                Height="32"
-                Margin="0"
-                Background="Transparent"
-                Foreground="#6F6685"
-                BorderThickness="0"
-                Cursor="Hand">
-
-                <TextBlock
-                    Text="5"
-                    FontSize="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-
-            </Button>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
 
 
@@ -163,7 +102,8 @@
                 BorderThickness="0"
                 Foreground="#6fff85"
                 Cursor="Hand"
-                ToolTip="Pagina Siguiente" >
+                ToolTip="Pagina Siguiente" 
+                Click="OnNextPageClick">
 
                 <TextBlock
                     Text=">"

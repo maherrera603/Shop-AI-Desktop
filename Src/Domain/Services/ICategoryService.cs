@@ -1,4 +1,5 @@
 ﻿using ShopAIDesktop.Src.Domain.Common;
+using ShopAIDesktop.Src.Domain.Dtos.Responses.Category;
 using ShopAIDesktop.Src.Domain.entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace ShopAIDesktop.Src.Domain.Services;
 
 public interface ICategoryService
 {
-    Task<ApiResponse<List<Category>>> Find();
+    Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize);
 
     Task<ApiResponse<Category>> Create(Category category);
 

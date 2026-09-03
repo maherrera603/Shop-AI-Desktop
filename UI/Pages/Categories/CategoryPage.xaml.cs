@@ -30,16 +30,24 @@ public partial class CategoryPage : Page
 {
     private readonly ICategoryService _categoryService;
     private readonly IImageService _imageService;
+    private int _totalItems;
+    private int _currentPage = 1;
+    private int _pageSize = 1;
     public ObservableCollection<Category> Categories { get; set; } = new();
+
     public CategoryPage(ICategoryService categoryService, IImageService imageService)
     {
         InitializeComponent();
         _categoryService = categoryService;
         _imageService = imageService;
         DataContext = this;
+
         Loaded += CategoryPage_Loaded;
         CategoriesTable.DeleteRequest += HandleDeleteCategoryRequested;
         CategoriesTable.OpenFormUpdate += HandleFormUpdateRequested;
+
+        // Suscripcion al evento de cambio de pagina de paginacion
+        PaginationControl.PageChanged += HandlePageChanged;
     }
 
 
@@ -51,7 +59,7 @@ public partial class CategoryPage : Page
 
     private async Task LoadCategoriesAsync()
     { 
-        var response = await _categoryService.Find();
+        var response = await _categoryService.Find(_currentPage, _pageSize);
 
         if( response.Code >= 400)
         {
@@ -60,11 +68,22 @@ public partial class CategoryPage : Page
         }
 
         Categories.Clear();
-
-        foreach (var category in response.Data!)
+        _totalItems = response.Data!.TotalItems;
+        foreach (var category in response.Data!.Categories)
         {
             Categories.Add(category);    
         }
+
+        // Actualizar las propiedades del control visual de paginacion
+        PaginationControl.CurrentPage = _currentPage;
+        PaginationControl.PageSize = _pageSize;
+        PaginationControl.TotalItems = _totalItems;
+    }
+
+    private async void HandlePageChanged(object sender, int newPage)
+    {
+        _currentPage = newPage;
+        await LoadCategoriesAsync();
     }
 
     private void HandleNewCategoryButton_Click(object sender, RoutedEventArgs e)

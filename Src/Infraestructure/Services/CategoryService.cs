@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text;
 using ShopAIDesktop.Src.Config;
 using ShopAIDesktop.Src.Domain.Common;
+using ShopAIDesktop.Src.Domain.Dtos.Responses.Category;
 using ShopAIDesktop.Src.Domain.entities;
 using ShopAIDesktop.Src.Domain.Services;
 using ShopAIDesktop.Src.Exceptions;
@@ -23,17 +24,17 @@ public class CategoryService : ICategoryService
         _shopAIConfiguration = shopAIConfiguration;
     }
 
-    public async Task<ApiResponse<List<Category>>> Find()
+    public async Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize)
     {
         try
         {
-            using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_shopAIConfiguration.Gateway}/categories/all");
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{_shopAIConfiguration.Gateway}/categories/all?page={currentPage}&pageSize={pageSize}");
             httpRequest.Headers.Add("x-platform", "WEB");
             httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
 
             var resposne = await _httpClient.SendAsync(httpRequest);
 
-            var result = await resposne.Content.ReadFromJsonAsync<ApiResponse<List<Category>>>();
+            var result = await resposne.Content.ReadFromJsonAsync<ApiResponse<PaginationCategoryResponse>>();
 
             return result!;
         }
