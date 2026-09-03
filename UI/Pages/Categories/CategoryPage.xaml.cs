@@ -35,6 +35,8 @@ public partial class CategoryPage : Page
     private int _pageSize = 30;
     private string _selectedStatus = "all";
 
+    private string _searchQuery = "";
+
     // Bandera para evitar ejecucione prematuras en InitilizaeComponente
     private bool _isInitialized = false;
     public ObservableCollection<Category> Categories { get; set; } = new();
@@ -65,7 +67,7 @@ public partial class CategoryPage : Page
 
     private async Task LoadCategoriesAsync()
     { 
-        var response = await _categoryService.Find(_currentPage, _pageSize, _selectedStatus);
+        var response = await _categoryService.Find(_currentPage, _pageSize, _selectedStatus, _searchQuery);
 
         if( response.Code >= 400)
         {
@@ -84,6 +86,19 @@ public partial class CategoryPage : Page
         PaginationControl.CurrentPage = _currentPage;
         PaginationControl.PageSize = _pageSize;
         PaginationControl.TotalItems = _totalItems;
+    }
+
+
+    private async void HandleSearchTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            _searchQuery = SearchBox.Text.Trim();
+
+            // siempre reiniciamos la primera pagina al realizar una nueva busqueda
+            _currentPage = 1;
+            await LoadCategoriesAsync();
+        }
     }
 
     private async void HandleStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

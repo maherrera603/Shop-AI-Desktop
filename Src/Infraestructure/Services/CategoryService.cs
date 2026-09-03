@@ -24,11 +24,11 @@ public class CategoryService : ICategoryService
         _shopAIConfiguration = shopAIConfiguration;
     }
 
-    public async Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize, string status)
+    public async Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize, string status, string search)
     {
         try
         { 
-            string url = $"{_shopAIConfiguration.Gateway}/categories/all?page={currentPage}&pageSize={pageSize}&isActive={status}";
+            string url = $"{_shopAIConfiguration.Gateway}/categories/all?page={currentPage}&pageSize={pageSize}&isActive={status}&search={search}";
             using var httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
             httpRequest.Headers.Add("x-platform", "WEB");
             httpRequest.Headers.Add("Authorization", $"Bearer {AuthContext.Session.AccessToken}");
