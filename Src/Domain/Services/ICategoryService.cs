@@ -9,7 +9,7 @@ namespace ShopAIDesktop.Src.Domain.Services;
 
 public interface ICategoryService
 {
-    Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize);
+    Task<ApiResponse<PaginationCategoryResponse>> Find(int currentPage, int pageSize, string status);
 
     Task<ApiResponse<Category>> Create(Category category);
 

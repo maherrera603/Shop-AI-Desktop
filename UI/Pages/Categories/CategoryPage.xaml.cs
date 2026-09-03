@@ -32,7 +32,11 @@ public partial class CategoryPage : Page
     private readonly IImageService _imageService;
     private int _totalItems;
     private int _currentPage = 1;
-    private int _pageSize = 1;
+    private int _pageSize = 30;
+    private string _selectedStatus = "all";
+
+    // Bandera para evitar ejecucione prematuras en InitilizaeComponente
+    private bool _isInitialized = false;
     public ObservableCollection<Category> Categories { get; set; } = new();
 
     public CategoryPage(ICategoryService categoryService, IImageService imageService)
@@ -53,13 +57,15 @@ public partial class CategoryPage : Page
 
     private async void CategoryPage_Loaded(object sender, RoutedEventArgs e)
     {
+
+        _isInitialized = true;
         await LoadCategoriesAsync();
     }
 
 
     private async Task LoadCategoriesAsync()
     { 
-        var response = await _categoryService.Find(_currentPage, _pageSize);
+        var response = await _categoryService.Find(_currentPage, _pageSize, _selectedStatus);
 
         if( response.Code >= 400)
         {
@@ -79,6 +85,27 @@ public partial class CategoryPage : Page
         PaginationControl.PageSize = _pageSize;
         PaginationControl.TotalItems = _totalItems;
     }
+
+    private async void HandleStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!_isInitialized) return;
+
+        if (StatusComboBox.SelectedItem is ComboBoxItem selectedItem)
+        {
+            string content = selectedItem.Content.ToString() ?? "Todas";
+
+            _selectedStatus = content switch
+            {
+                "Activas" => "active",
+                "Inactivas" => "inactive",
+                _ => "all"
+            };
+
+            _currentPage = 1;
+            await LoadCategoriesAsync();
+        }
+    }
+
 
     private async void HandlePageChanged(object sender, int newPage)
     {

@@ -122,6 +122,7 @@
             
                     <!--ESTADO-->
                     <ComboBox
+                        x:Name="StatusComboBox"
                         Grid.Column="1"
                         Width="250"
                         Height="42"
@@ -130,7 +131,8 @@
                         HorizontalAlignment="Left"
                         Background="Transparent"
                         BorderBrush="#E4DDF5"
-                        BorderThickness="1">
+                        BorderThickness="1"
+                        SelectionChanged="HandleStatusComboBox_SelectionChanged">
 
                         <ComboBoxItem Content="Todas" IsSelected="True"/>
                         <ComboBoxItem Content="Activas" />
