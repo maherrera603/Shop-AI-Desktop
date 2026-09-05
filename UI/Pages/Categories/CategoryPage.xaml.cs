@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ShopAIDesktop.Src.Domain.entities;
 using ShopAIDesktop.Src.Domain.Services;
+using ShopAIDesktop.Src.Infraestructure.Sessions;
 using ShopAIDesktop.UI.Components.ConfirmationAlert;
 using ShopAIDesktop.UI.Components.CustomAlert;
 using System;
@@ -54,6 +55,9 @@ public partial class CategoryPage : Page
 
         // Suscripcion al evento de cambio de pagina de paginacion
         PaginationControl.PageChanged += HandlePageChanged;
+
+
+        ApplyViewMode();
     }
 
 
@@ -197,17 +201,31 @@ public partial class CategoryPage : Page
             .Navigate(categoryFormPage);
     }
 
+    private void ApplyViewMode()
+    {
+        if (CategoryUIContext.IsCardsView)
+        {
+            CategoriesTable.Visibility = Visibility.Collapsed;
+            CategoriesCardsContainer.Visibility = Visibility.Visible;
+            return;
+        }
+        
+        CategoriesTable.Visibility = Visibility.Visible;
+        CategoriesCardsContainer.Visibility = Visibility.Collapsed;
+        return;
+    }
+
 
     private void HandleTableViewButton_Click(object sender, RoutedEventArgs e)
     {
-        CategoriesTable.Visibility = Visibility.Visible;
-        CategoriesCardsContainer.Visibility = Visibility.Collapsed;
+        CategoryUIContext.SetViewMode(CategoryViewMode.Table);   
+        ApplyViewMode();
     }
 
     private void HandleCardsViewButton_Click(object sender, RoutedEventArgs e)
     {
-        CategoriesTable.Visibility = Visibility.Collapsed;
-        CategoriesCardsContainer.Visibility = Visibility.Visible;
+        CategoryUIContext.SetViewMode(CategoryViewMode.Cards);
+        ApplyViewMode();
     }
 
     private void CatalogCardControl_EditRequested(object sender, RoutedEventArgs e)
