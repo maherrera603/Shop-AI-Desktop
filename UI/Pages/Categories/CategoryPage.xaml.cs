@@ -196,4 +196,29 @@ public partial class CategoryPage : Page
             .GetNavigationService(this)
             .Navigate(categoryFormPage);
     }
+
+
+    private void HandleTableViewButton_Click(object sender, RoutedEventArgs e)
+    {
+        CategoriesTable.Visibility = Visibility.Visible;
+        CategoriesCardsContainer.Visibility = Visibility.Collapsed;
+    }
+
+    private void HandleCardsViewButton_Click(object sender, RoutedEventArgs e)
+    {
+        CategoriesTable.Visibility = Visibility.Collapsed;
+        CategoriesCardsContainer.Visibility = Visibility.Visible;
+    }
+
+    private void CatalogCardControl_EditRequested(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement element && element.DataContext is Category category)
+            HandleFormUpdateRequested(sender,category);
+    }
+
+    private async void CatalogCardControl_DeleteRequested(object sender, RoutedEventArgs e)
+    {
+        if(sender is FrameworkElement element && element.DataContext is Category category)
+            HandleDeleteCategoryRequested(sender,category);
+    }
 }

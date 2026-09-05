@@ -7,6 +7,7 @@
       xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
       xmlns:pagination="clr-namespace:ShopAIDesktop.UI.Components.Pagination"
       xmlns:dataTable="clr-namespace:ShopAIDesktop.UI.Components.DataTable"
+      xmlns:customCardItem="clr-namespace:ShopAIDesktop.UI.Components.CustomCardItem" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CategoryPage">
@@ -149,12 +150,14 @@
                     Margin="20,0,0,0">
 
                     <Button
+                        x:Name="BtnTable"
                         Width="85"
                         Height="42"
                         Background="#5522AB"
                         Foreground="White"
                         BorderThickness="0"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Click="HandleTableViewButton_Click">
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center">
                             <svgc:SvgViewbox
@@ -173,13 +176,15 @@
                     </Button>
 
                     <Button
+                        x:Name="BtnCard"
                         Width="85"
                         Height="42"
                         Background="#5522AB"
                         Foreground="White"
                         BorderThickness="0"
                         Margin="15,0,0,0"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Click="HandleCardsViewButton_Click">
 
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center">
@@ -213,11 +218,38 @@
             </Grid.RowDefinitions>
 
             <!--Fila 3.1: Tabla / Tajetas-->
-            <Border Grid.Row="0">
+            <Grid Grid.Row="0" Margin="0, 15,0,0">
                 <dataTable:DataTable 
                     x:Name="CategoriesTable"
-                    ItemsSource="{Binding Categories}"/>
-            </Border>
+                    Visibility="Visible"
+                    ItemsSource="{Binding Categories}" />
+
+                <ScrollViewer
+                    x:Name="CategoriesCardsContainer"
+                    Visibility="Collapsed"
+                    VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding Categories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Enlace directo a las propiedades del objecto Category -->
+                                <customCardItem:CustomCardItem Title="{Binding Name}"
+                                                               ImageUrl="{Binding ImageUrl}"
+                                                               IsActive="{Binding IsActive}"
+                                                               EditRequested="CatalogCardControl_EditRequested"
+                                                               DeleteRequested="CatalogCardControl_DeleteRequested"
+                                                               />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl> 
+                </ScrollViewer>
+            </Grid>
+            
+            
             
             <!--Fila 3.2: Paginacion-->
             <pagination:Pagination 
