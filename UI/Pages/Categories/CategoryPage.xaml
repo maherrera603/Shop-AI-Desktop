@@ -5,9 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ShopAIDesktop.UI.Pages.Categories"
       xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
-      xmlns:pagination="clr-namespace:ShopAIDesktop.UI.Components.Pagination"
+      xmlns:customSearch="clr-namespace:ShopAIDesktop.UI.Components.CustomSearch"
       xmlns:dataTable="clr-namespace:ShopAIDesktop.UI.Components.DataTable"
       xmlns:customCardItem="clr-namespace:ShopAIDesktop.UI.Components.CustomCardItem" 
+      xmlns:pagination="clr-namespace:ShopAIDesktop.UI.Components.Pagination"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CategoryPage">
@@ -72,143 +73,13 @@
         </Grid>
 
         <!--FILTROS Y ORGANIZACION-->
-        <Border Grid.Row="1"
-                Margin="0, 20, 0,0"
-                Padding="20"
-                Background="White"
-                BorderBrush="#DDD2F5"
-                BorderThickness="1"
-                CornerRadius="10">
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <customSearch:CustomSearch 
+            Grid.Row="1" 
+            x:Name="CustomSearchBar"
+            SearchTrigged="CustomSearch_SearchTrigged"
+            StatusChanged="CustomSearch_StatusChanged"
+            ViewModeChanged="CustomSearch_ViewModeChanged"/>
 
-                <StackPanel Grid.Column="0"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center">
-                
-                    <Border
-                            Height="42"
-                            Width="400"
-                            MaxWidth="450"
-                            HorizontalAlignment="Left"
-                            Background="#F8F6FC"
-                            BorderBrush="#E4DDF5"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="42" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <svgc:SvgViewbox Grid.Column="0"
-                                             Source="/Assets/Icons/search.svg"
-                                             Width="18"
-                                             Height="18"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center" />
-                    
-                            <TextBox x:Name="SearchBox"
-                                     Grid.Column="1"
-                                     BorderThickness="0"
-                                     Background="Transparent"
-                                     VerticalContentAlignment="Center"
-                                     FontSize="13"
-                                     Foreground="#3F3A48"
-                                     Padding="0,0,10,0" 
-                                     KeyDown="HandleSearchTextBox_KeyDown"/>
-                        </Grid>
-                    </Border>
-            
-                    <!--ESTADO-->
-                    <ComboBox
-                        x:Name="StatusComboBox"
-                        Grid.Column="1"
-                        Width="250"
-                        Height="42"
-                        Margin="15,0,0,0"
-                        VerticalContentAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Background="Transparent"
-                        BorderBrush="#E4DDF5"
-                        BorderThickness="1"
-                        SelectionChanged="HandleStatusComboBox_SelectionChanged">
-
-                        <ComboBoxItem Content="Todas" IsSelected="True"/>
-                        <ComboBoxItem Content="Activas" />
-                        <ComboBoxItem Content="Inactivas" />
-                    </ComboBox>
-                </StackPanel>
-            
-                <!--CAMBIO DE VISTA-->
-                <StackPanel
-                    Grid.Column="1"
-                    Orientation="Horizontal"
-                    Margin="20,0,0,0">
-
-                    <Button
-                        x:Name="BtnTable"
-                        Width="85"
-                        Height="42"
-                        Background="#5522AB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="HandleTableViewButton_Click">
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Center">
-                            <svgc:SvgViewbox
-                                Source="/Assets/Icons/list.svg"
-                                Width="18"
-                                Height="18" />
-
-                            <TextBlock 
-                                Text="Tabla"
-                                FontSize="13"
-                                FontWeight="SemiBold"
-                                VerticalAlignment="Center" 
-                                Margin="7,0,0,0"/>
-
-                        </StackPanel>
-                    </Button>
-
-                    <Button
-                        x:Name="BtnCard"
-                        Width="85"
-                        Height="42"
-                        Background="#5522AB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Margin="15,0,0,0"
-                        Cursor="Hand"
-                        Click="HandleCardsViewButton_Click">
-
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Center">
-                            <svgc:SvgViewbox
-                                Source="/Assets/Icons/grid.svg"
-                                Width="18"
-                                Height="18" />
-
-                            <TextBlock
-                                Text="Tarjetas"
-                                FontSize="13"
-                                FontWeight="SemiBold"
-                                VerticalAlignment="Center"
-                                Margin="7,0,0,0"/>
-
-                        </StackPanel>
-
-                    </Button>
-
-                </StackPanel>
-                    
-            </Grid>
-
-        </Border>
 
         <!-- Fila 3: Contenido + Paginacion -->
         <Grid Grid.Row="2" Margin="0, 20, 0, 0">

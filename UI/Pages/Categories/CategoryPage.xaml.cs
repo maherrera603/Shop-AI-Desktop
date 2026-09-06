@@ -40,6 +40,7 @@ public partial class CategoryPage : Page
 
     // Bandera para evitar ejecucione prematuras en InitilizaeComponente
     private bool _isInitialized = false;
+
     public ObservableCollection<Category> Categories { get; set; } = new();
 
     public CategoryPage(ICategoryService categoryService, IImageService imageService)
@@ -90,39 +91,6 @@ public partial class CategoryPage : Page
         PaginationControl.CurrentPage = _currentPage;
         PaginationControl.PageSize = _pageSize;
         PaginationControl.TotalItems = _totalItems;
-    }
-
-
-    private async void HandleSearchTextBox_KeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Enter)
-        {
-            _searchQuery = SearchBox.Text.Trim();
-
-            // siempre reiniciamos la primera pagina al realizar una nueva busqueda
-            _currentPage = 1;
-            await LoadCategoriesAsync();
-        }
-    }
-
-    private async void HandleStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (!_isInitialized) return;
-
-        if (StatusComboBox.SelectedItem is ComboBoxItem selectedItem)
-        {
-            string content = selectedItem.Content.ToString() ?? "Todas";
-
-            _selectedStatus = content switch
-            {
-                "Activas" => "active",
-                "Inactivas" => "inactive",
-                _ => "all"
-            };
-
-            _currentPage = 1;
-            await LoadCategoriesAsync();
-        }
     }
 
 
@@ -179,7 +147,6 @@ public partial class CategoryPage : Page
         alert.ShowDialog();
     }
 
-    // !TODO: Traerme el redireccionamiento ha CategoryFormPage y quitarlo de la tabla
     public async void HandleFormUpdateRequested(object sender, Category category)
     {
         var categoryFormPage = ((App)Application.Current)
@@ -216,17 +183,37 @@ public partial class CategoryPage : Page
     }
 
 
-    private void HandleTableViewButton_Click(object sender, RoutedEventArgs e)
+    private async void CustomSearch_SearchTrigged(object sender, string query)
     {
-        CategoryUIContext.SetViewMode(CategoryViewMode.Table);   
+        _searchQuery = query;
+
+        // siempre reiniciamos la primera pagina al realizar una nueva busqueda
+        _currentPage = 1;
+        await LoadCategoriesAsync();
+    }
+
+    private async void CustomSearch_StatusChanged(object sender, string status)
+    {
+        if (!_isInitialized) return;
+
+        _selectedStatus = status switch
+        {
+            "Activas" => "active",
+            "Inactivas" => "inactive",
+            _ => "all"
+        };
+
+        _currentPage = 1;
+        await LoadCategoriesAsync();
+    }
+
+    private void CustomSearch_ViewModeChanged(object sender, bool isCardsView)
+    {
+        // Actualiza el contexto estatico correspondiente (CategoryUIContexto /ProductUIContext)
+        CategoryUIContext.SetViewMode(isCardsView ? CategoryViewMode.Cards : CategoryViewMode.Table);
         ApplyViewMode();
     }
 
-    private void HandleCardsViewButton_Click(object sender, RoutedEventArgs e)
-    {
-        CategoryUIContext.SetViewMode(CategoryViewMode.Cards);
-        ApplyViewMode();
-    }
 
     private void CatalogCardControl_EditRequested(object sender, RoutedEventArgs e)
     {
