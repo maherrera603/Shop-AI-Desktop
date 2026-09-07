@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ShopAIDesktop.UI.Pages.Categories"
       xmlns:svgc="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf"
+      xmlns:customHeader="clr-namespace:ShopAIDesktop.UI.Components.CustomHeader"
       xmlns:customSearch="clr-namespace:ShopAIDesktop.UI.Components.CustomSearch"
       xmlns:dataTable="clr-namespace:ShopAIDesktop.UI.Components.DataTable"
       xmlns:customCardItem="clr-namespace:ShopAIDesktop.UI.Components.CustomCardItem" 
@@ -22,55 +23,11 @@
         </Grid.RowDefinitions>
 
         <!--HEADER-->
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            
-            <StackPanel Grid.Column="0">
-                <TextBlock
-                    Text="Categorias"
-                    FontSize="28"
-                    FontWeight="SemiBold"
-                    Foreground="#3F1B91" />
-
-                <TextBlock
-                    Text="Administra las categorias de tu catalogo"
-                    FontSize="13"
-                    Foreground="#6F6685"
-                    Margin="0,6,0,0" />
-            </StackPanel>
-
-            <Button 
-                Grid.Column="1"
-                Width="170"
-                Height="42"
-                Margin="20,0,0,0"
-                Background="#5522AB"
-                Foreground="White"
-                HorizontalAlignment="Right"
-                BorderThickness="1"
-                Cursor="Hand"
-                Click="HandleNewCategoryButton_Click">
-                <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-
-                    <svgc:SvgViewbox Source="/Assets/Icons/plus.svg"
-                                 Width="18"
-                                 Height="18"
-                                 Margin="0,0,8,0" />
-                    <TextBlock
-                    Text="Nueva Categoría"
-                    FontSize="13"
-                    FontWeight="SemiBold"
-                    VerticalAlignment="Center" />
-                </StackPanel>
-
-            </Button>
-
-        </Grid>
+        <customHeader:CustomHeader Grid.Row="0" 
+                                   Title="Categorías"
+                                   SubTitle="Administra las categorias de tu catalogo"
+                                   ActionButtonText="Nueva Categoria"
+                                   ActionRequested="HandleNewCategoryButton_Click"/>
 
         <!--FILTROS Y ORGANIZACION-->
         <customSearch:CustomSearch 
@@ -116,22 +73,16 @@
                                                                />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl> 
+                    </ItemsControl>
                 </ScrollViewer>
             </Grid>
-            
-            
-            
+
             <!--Fila 3.2: Paginacion-->
             <pagination:Pagination 
                 x:Name="PaginationControl"
                 Grid.Row="1"
                 Margin="0,15,0,0" />
 
-
-
         </Grid>
     </Grid>
-    
-    
 </Page>
